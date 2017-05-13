@@ -1,6 +1,6 @@
-
-
 # Material design
+
+from: https://material.angular.io/guide/getting-started
 
 ## Install
 
@@ -10,18 +10,39 @@
 
 ## Setup
 
-### `app.module.ts` setup
-```ts
-import {MdButtonModule, MdCheckboxModule} from '@angular/material';
+### create material module
+
+`ng g m material --spec false`
+
+### app/material/material.module.ts
+
+```
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+  // IMPORT each material element you want to use here
+  MdButtonModule
+} from '@angular/material';
 
 @NgModule({
-  ...
-  imports: [MdButtonModule, MdCheckboxModule],
-  ...
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    MdButtonModule,
+  ],
+  exports: [
+    // REMEMBER TO EXPORT!
+    MdButtonModule
+  ],
+  declarations: []
 })
+export class MaterialModule { }
+
 ```
 
-### `index.html`
+
+### index.html
 
 `<link href="../node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">`
 
@@ -29,13 +50,23 @@ import {MdButtonModule, MdCheckboxModule} from '@angular/material';
 
 `npm install --save hammerjs`
 
-then in `app.module.ts`:
+### app.module.ts:
 
-```ts
+```
 import 'hammerjs';
+import { MaterialModule } from './material/material.module';
+
+@NgModule({
+  ...
+  imports: [
+    MaterialModule
+  ],
+})
 ```
 
 ## Use
+
+see https://material.angular.io/components for list of components available.
 
 ```html
 
