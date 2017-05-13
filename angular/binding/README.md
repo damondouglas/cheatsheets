@@ -50,3 +50,32 @@ export class MyClass {
   ...
 }
 ```
+
+# Two-way data binding
+
+```ts
+export class SomeComponent {
+	myProperty = "";
+}
+```
+
+```html
+<input
+[(ngModel)]="myProperty"
+>
+
+<div>{{myProperty}}</div>
+```
+
+IMPORTANT: In order for this to work you must have `FormsModule` in `imports[]` array in `AppModule`.
+
+```ts
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  ...
+  imports: [
+    FormsModule,
+  ],
+})
+```
