@@ -135,3 +135,34 @@ Consule output:
 ```
 Object {name: "foo", timestamp: Sat May 13 2017 18:28:58 GMT-0700 (PDT)}
 ```
+
+# binding of local DOM
+
+```
+import {
+  Component,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  // 'someInput inside ViewChild matches name in html'
+  @ViewChild('someInput') someInputRef:ElementRef;
+
+  onClickMe() {
+    console.log(this.someInputRef.nativeElement.value);
+  }
+}
+```
+
+```html
+<input type="text"
+#someInput>
+
+<button (click)="onClickMe()">click me</button>
+```
