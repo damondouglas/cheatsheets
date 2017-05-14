@@ -1,6 +1,4 @@
-# Binding
-
-## property binding
+# property binding
 
 ```ts
 @Component(...)
@@ -13,7 +11,7 @@ export class SomeComponent {
   <button [disabled]="shouldBeDisabled">click me</button>
 ```
 
-## event binding
+# event binding
 
 ```html
 <button
@@ -78,4 +76,62 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ],
 })
+```
+
+# custom event binding
+
+## Child component
+
+```
+import {
+  Component, OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  templateUrl: './child.component.html',
+  styleUrls: ['./child.component.css']
+})
+export class ChildComponent implements OnInit {
+  @Output() timeout = new EventEmitter<{name: string, timestamp: Date}>();;
+  constructor() { }
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.timeout.emit({
+        name: 'foo',
+        timestamp: new Date()
+      });
+    }, 1000);
+  }
+}
+```
+
+## Parent component
+
+```
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  doSomething(event) {
+    console.log(event);
+  }
+}
+```
+
+```html
+<app-child (timeout) = "doSomething($event)"></app-child>
+```
+
+Consule output:
+```
+Object {name: "foo", timestamp: Sat May 13 2017 18:28:58 GMT-0700 (PDT)}
 ```
